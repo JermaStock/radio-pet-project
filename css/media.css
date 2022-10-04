@@ -1100,10 +1100,11 @@
 	.auth-modal__input {
 		margin-bottom: 20px;
 		padding: 9px 17px;
+		font-size: 14px;
 	}
 
 	.auth-modal__input::placeholder {
-		font-size: 16px;
+		font-size: 14px;
 		line-height: 16px;
 	}
 
