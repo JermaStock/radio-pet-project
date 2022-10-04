@@ -173,6 +173,12 @@ body {
 	display: none;
 }
 
+.error {
+	position: absolute;
+	font-size: 13px;
+	color: red;
+}
+
 /* header */
 .header__container {
 	position: relative;
@@ -604,6 +610,15 @@ body {
 	flex-direction: column;
 	padding-bottom: 29px;
 	max-width: 526px;
+}
+
+.auth-modal__label {
+	position: relative;
+}
+
+.error-modal {
+	bottom: 8px;
+	left: 25px;
 }
 
 .auth-modal__input {
@@ -2222,6 +2237,20 @@ body {
 	max-width: 82.9%;
 }
 
+.error-about {
+	bottom: -21px;
+	left: 23px;
+}
+
+.about-form__label {
+	position: relative;
+	width: 50%;
+}
+
+.about-form__label:first-child {
+	margin-right: 30px;
+}
+
 .about-form__input {
 	border-radius: 30px;
 	border: 1px solid var(--color-white);
@@ -2264,13 +2293,9 @@ body {
 }
 
 .about-form__input--input {
-	flex-grow: 1;
 	padding: 24px 32px;
+	width: 100%;
 	border-radius: 40px;
-}
-
-.about-form__input--input:first-of-type {
-	margin-right: 30px;
 }
 
 .about-form__btn {

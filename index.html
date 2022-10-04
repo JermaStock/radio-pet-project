@@ -1972,12 +1972,16 @@
 				<form class="about-form">
 					<textarea class="about-form__input about-form__input--textarea" placeholder="Что скажите?"></textarea>
 					<div class="about-form__wrapper">
-						<input class="about-form__input about-form__input--input" type="text" placeholder="Имя">
-						<input class="about-form__input about-form__input--input" type="text" placeholder="Email">
+						<label class="about-form__label">
+							<input id="aboutname" class="about-form__input-field about-form__input about-form__input--input" type="text" placeholder="Имя">
+						</label>
+						<label class="about-form__label">
+							<input id="aboutmail" class="about-form__input-field about-form__input about-form__input--input" type="text" placeholder="Email">
+						</label>
 					</div>
 					<button class="about-form__btn btn btn-reset">Отправить</button>
 					<label class="about-form-label">
-						<input class="about-form-label__checkbox" type="checkbox" required>
+						<input id="aboutcheck" class="about-form__input-field about-form-label__checkbox" type="checkbox">
 						<span class="about-form-label__text">Согласен&nbsp;на&nbsp;обработку&nbsp;персональных&nbsp;данных</span>
 					</label>
 				</form>
@@ -1998,8 +2002,12 @@
 							Если&nbsp;у&nbsp;вас&nbsp;ещё&nbsp;нет&nbsp;аккаунта, <a href="#" class="auth-modal__link">зарегестрируйтесь</a>
 						</p>
 						<form class="auth-modal__form form">
-							<input type="text" class="auth-modal__input" placeholder="Логин" required>
-							<input type="password" class="auth-modal__input" placeholder="Пароль" required>
+							<label class="auth-modal__label">
+								<input id="authlogin" type="text" class="auth-modal__input" placeholder="Логин">
+							</label>
+							<label class="auth-modal__label">
+								<input id="authpass" type="password" class="auth-modal__input" placeholder="Пароль">
+							</label>
 							<button class="auth-modal__btn btn-reset">Войти</button>
 						</form>
 					</div>

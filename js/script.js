@@ -65,8 +65,75 @@
 		});
 	}
 
-	function formValidation() {
-		
+	function formValidation(formSelector, inputSelector, errorClass) {
+		const form = document.querySelector(formSelector);
+		const inputs = document.querySelectorAll(inputSelector);
+		const invalidMessages = {
+			authlogin: 'Поле логина обязательно для заполнения!',
+			authpass: 'Пароль является обязательным!',
+			authloginShort: 'Мин. длина логина 4 символа.',
+			authpassShort: 'Пароль слишком короткий.',
+			aboutname: 'Поле обязательно для заполнения!',
+			aboutnameShort: 'Мин. длина поля 2 символа',
+			aboutmail: 'Некорректный E-mail!',
+			aboutmailSymbol: 'E-mail должен содержать символы: "@", "."',
+			aboutcheck: 'Необходимо Ваше согласие.',
+		};
+
+		const createErrorField = (input) => {
+			if (!input.value.trim()) {
+				let error = document.createElement('span');
+				error.classList.add(errorClass, 'error');
+				error.textContent = invalidMessages[input.id];
+				input.parentElement.append(error);
+			} else if (input.id === 'authlogin') {
+					let error = document.createElement('span');
+					error.classList.add(errorClass, 'error');
+					error.textContent = invalidMessages[`${input.id}Short`];
+					input.parentElement.append(error);
+			} else if (input.id === 'authpass') {
+					let error = document.createElement('span');
+					error.classList.add(errorClass, 'error');
+					error.textContent = invalidMessages[`${input.id}Short`];
+					input.parentElement.append(error);
+			} else if (input.id === 'aboutname') {
+					let error = document.createElement('span');
+					error.classList.add(errorClass, 'error');
+					error.textContent = invalidMessages[`${input.id}Short`];
+					input.parentElement.append(error);
+			}	else if (input.id === 'aboutmail') {
+					let error = document.createElement('span');
+					error.classList.add(errorClass, 'error');
+					error.textContent = invalidMessages[`${input.id}Symbol`];
+					input.parentElement.append(error);
+			} else if (input.id === 'aboutcheck') {
+					let error = document.createElement('span');
+					error.classList.add(errorClass, 'error');
+					error.textContent = invalidMessages[`${input.id}`];
+					input.parentElement.append(error);
+			}
+		};
+
+			form.addEventListener('submit', (e) => {
+				inputs.forEach(item => {
+					if (!item.value.trim() ||
+							(item.id === 'authpass' && item.value.length < 4) ||
+							(item.id === 'authlogin' && item.value.length < 4) ||
+							(item.id === 'aboutname' && item.value.length < 2) ||
+							(item.id === 'aboutmail') && !item.value.includes("@" && '.') ||
+							(item.id === 'aboutcheck' && !item.checked)) {
+						e.preventDefault();
+						if (item.parentElement.querySelector(`.${errorClass}`)) {
+							item.parentElement.querySelector(`.${errorClass}`).remove();
+						}
+						createErrorField(item);
+					} else {
+						if (item.parentElement.querySelector(`.${errorClass}`)) {
+							item.parentElement.querySelector(`.${errorClass}`).remove();
+						}
+					}
+				})
+			})
 	}
 
 	function burgerMenuInit() {
@@ -168,55 +235,60 @@
 
 		guestsTabsInit()
 
-		formValidation();
+		formValidation('.auth-modal__form', '.auth-modal__input', 'error-modal');
+		formValidation('.about-form', '.about-form__input-field', 'error-about');
 
-		let init = false;
+		const playListSwiper = () => {
+			let init = false;
 
-		function playListSwiperInit() {
-			if (window.innerWidth <= 650) {
-				if (!init) {
-					init = true;
-					document.querySelector('.playlist-form').classList.add('swiper')
-					document.querySelector('.playlist-form__list').classList.add('swiper-wrapper');
-					document.querySelectorAll('.playlist-form__item').forEach(el => {
-						el.classList.add('swiper-slide');
-					})
-					swiper = new Swiper(".playlist-form", {
-						direction: "horizontal",
-						slidesPerView: 'auto',
-						spaceBetween: 15,
-						breakpoints: {
-							360: {
-								spaceBetween: 30,
+			function playListSwiperInit() {
+				if (window.innerWidth <= 650) {
+					if (!init) {
+						init = true;
+						document.querySelector('.playlist-form').classList.add('swiper')
+						document.querySelector('.playlist-form__list').classList.add('swiper-wrapper');
+						document.querySelectorAll('.playlist-form__item').forEach(el => {
+							el.classList.add('swiper-slide');
+						})
+						swiper = new Swiper(".playlist-form", {
+							direction: "horizontal",
+							slidesPerView: 'auto',
+							spaceBetween: 15,
+							breakpoints: {
+								360: {
+									spaceBetween: 30,
+								}
 							}
-						}
-					});
-					function activePlaylistBtn() {
-						const genreButton  = document.querySelectorAll('.playlist-checkbox');
-						genreButton.forEach(btn => {
-							btn.addEventListener('click', function() {
-								genreButton.forEach(btn => {
-									btn.classList.remove('playlist-checkbox--active');
-								})
-								this.classList.add('playlist-checkbox--active');
-							})
 						});
+						function activePlaylistBtn() {
+							const genreButton  = document.querySelectorAll('.playlist-checkbox');
+							genreButton.forEach(btn => {
+								btn.addEventListener('click', function() {
+									genreButton.forEach(btn => {
+										btn.classList.remove('playlist-checkbox--active');
+									})
+									this.classList.add('playlist-checkbox--active');
+								})
+							});
+						}
+						activePlaylistBtn();
 					}
-					activePlaylistBtn();
+				} else if (init) {
+					document.querySelector('.playlist-form').classList.remove('swiper')
+					document.querySelector('.playlist-form__list').classList.remove('swiper-wrapper');
+					document.querySelectorAll('.playlist-form__item').forEach(el => {
+						el.classList.remove('swiper-slide');
+					})
+					swiper.destroy();
+					init = false;
 				}
-			} else if (init) {
-				document.querySelector('.playlist-form').classList.remove('swiper')
-				document.querySelector('.playlist-form__list').classList.remove('swiper-wrapper');
-				document.querySelectorAll('.playlist-form__item').forEach(el => {
-					el.classList.remove('swiper-slide');
-				})
-				swiper.destroy();
-				init = false;
 			}
+
+			playListSwiperInit();
+			window.addEventListener("resize", playListSwiperInit);
 		}
 
-		playListSwiperInit();
-		window.addEventListener("resize", playListSwiperInit);
+		playListSwiper();
 
 		new Swiper(".about-swiper", {
 			direction: "horizontal",
