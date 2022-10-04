@@ -1532,6 +1532,17 @@
 		font-size: 17px;
 	}
 
+	.about-form__input {
+		padding: 24px 17px;
+		font-size: 16px;
+		line-height: 16px;
+	}
+
+	.about-form__input::placeholder {
+		font-size: 16px;
+		line-height: 16px;
+	}
+
 	/* footer */
 	.footer {
 		background-position: -8px 524px;
@@ -1739,12 +1750,6 @@
 	}
 
 	/* about */
-	.about-form__input {
-		padding: 24px 17px;
-		font-size: 16px;
-		line-height: 16px;
-	}
-
 	.about-form__btn {
 		padding: 25px 54px;
 		font-size: 16px;
