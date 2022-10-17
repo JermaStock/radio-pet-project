@@ -179,6 +179,10 @@ body {
 	color: red;
 }
 
+.input-error {
+	border-color: red !important;
+}
+
 /* header */
 .header__container {
 	position: relative;

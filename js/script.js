@@ -82,31 +82,37 @@
 
 		const createErrorField = (input) => {
 			if (!input.value.trim()) {
+				input.classList.add('input-error');
 				let error = document.createElement('span');
 				error.classList.add(errorClass, 'error');
 				error.textContent = invalidMessages[input.id];
 				input.parentElement.append(error);
 			} else if (input.id === 'authlogin') {
+				input.classList.add('input-error');
 					let error = document.createElement('span');
 					error.classList.add(errorClass, 'error');
 					error.textContent = invalidMessages[`${input.id}Short`];
 					input.parentElement.append(error);
 			} else if (input.id === 'authpass') {
+				input.classList.add('input-error');
 					let error = document.createElement('span');
 					error.classList.add(errorClass, 'error');
 					error.textContent = invalidMessages[`${input.id}Short`];
 					input.parentElement.append(error);
 			} else if (input.id === 'aboutname') {
+				input.classList.add('input-error');
 					let error = document.createElement('span');
 					error.classList.add(errorClass, 'error');
 					error.textContent = invalidMessages[`${input.id}Short`];
 					input.parentElement.append(error);
 			}	else if (input.id === 'aboutmail') {
+				input.classList.add('input-error');
 					let error = document.createElement('span');
 					error.classList.add(errorClass, 'error');
 					error.textContent = invalidMessages[`${input.id}Symbol`];
 					input.parentElement.append(error);
 			} else if (input.id === 'aboutcheck') {
+				input.classList.add('input-error');
 					let error = document.createElement('span');
 					error.classList.add(errorClass, 'error');
 					error.textContent = invalidMessages[`${input.id}`];
@@ -115,23 +121,32 @@
 		};
 
 			form.addEventListener('submit', (e) => {
-				inputs.forEach(item => {
+				const checkInputFields = (item) => {
 					if (!item.value.trim() ||
-							(item.id === 'authpass' && item.value.length < 4) ||
-							(item.id === 'authlogin' && item.value.length < 4) ||
-							(item.id === 'aboutname' && item.value.length < 2) ||
-							(item.id === 'aboutmail') && !item.value.includes("@" && '.') ||
-							(item.id === 'aboutcheck' && !item.checked)) {
-						e.preventDefault();
-						if (item.parentElement.querySelector(`.${errorClass}`)) {
-							item.parentElement.querySelector(`.${errorClass}`).remove();
-						}
-						createErrorField(item);
-					} else {
-						if (item.parentElement.querySelector(`.${errorClass}`)) {
-							item.parentElement.querySelector(`.${errorClass}`).remove();
-						}
-					}
+						(item.id === 'authpass' && item.value.length < 4) ||
+						(item.id === 'authlogin' && item.value.length < 4) ||
+						(item.id === 'aboutname' && item.value.length < 2) ||
+						(item.id === 'aboutmail') && !item.value.includes("@" && '.') ||
+						(item.id === 'aboutcheck' && !item.checked)) {
+							e.preventDefault();
+							if (item.parentElement.querySelector(`.${errorClass}`)) {
+								item.parentElement.querySelector(`.${errorClass}`).remove();
+							}
+							createErrorField(item);
+						} else {
+							if (item.parentElement.querySelector(`.${errorClass}`)) {
+								item.parentElement.querySelector(`.${errorClass}`).remove();
+							}
+							item.classList.remove('input-error');
+							}
+				}
+
+				inputs.forEach(item => {
+					item.addEventListener('input', () => {
+						checkInputFields(item);
+					});
+
+					checkInputFields(item)
 				})
 			})
 	}
